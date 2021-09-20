@@ -60,6 +60,24 @@ describe('Comment routes', () => {
       });
   });
 
+  it('GET A comment by id', async () => {
+    const comment = {
+      name: 'Isaac Awing',
+      comment: 'Qbsak is alright',
+      email: 'rebalalliance@ewingcommander.com',
+      date: '2021-08-01T07:00:00.000Z',
+    };
+
+    const commentWithId = await request(app)
+      .post('/api/v1/comments')
+      .send(comment);
+    const response = await request(app).get(
+      `/api/v1/comments/${commentWithId.body.id}`
+    );
+
+    expect(response.body).toEqual({ id: '1', ...comment });
+  });
+
   afterAll(() => {
     pool.end();
   });
