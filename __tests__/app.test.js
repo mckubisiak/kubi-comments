@@ -3,10 +3,25 @@ import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 
-describe('demo routes', () => {
+describe('Comment routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
+
+  it('creates a new comment', async () => {
+    const comment = {
+      name: 'Isaac Awing',
+      comment: 'Qbsak is alright',
+      email: 'rebalalliance@ewingcommander.com',
+    };
+
+    const response  = await request(app).post('/api/v1/comments').send(comment);
+    expect(response.body).toEqual({
+      id:'1',
+      ...comment,
+    });
+  });
+
 
   afterAll(() => {
     pool.end();
