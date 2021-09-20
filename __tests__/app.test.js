@@ -13,6 +13,7 @@ describe('Comment routes', () => {
       name: 'Isaac Awing',
       comment: 'Qbsak is alright',
       email: 'rebalalliance@ewingcommander.com',
+      date: '2021-08-01T07:00:00.000Z'
     };
 
     const response  = await request(app).post('/api/v1/comments').send(comment);
