@@ -39,10 +39,10 @@ describe('Comment routes', () => {
     };
 
     const comment3 = {
-      name: 'Isaac Awing',
-      comment: 'Qbsak is alright',
-      email: 'rebalalliance@ewingcommander.com',
-      date: '2021-08-11T07:00:00.000Z',
+      name: 'Randy',
+      comment: 'kubisiak is obnoxious',
+      email: 'randy@rude.com',
+      date: '2021-08-18T07:00:00.000Z',
     };
 
     await request(app).post('/api/v1/comments').send(comment);
@@ -60,7 +60,7 @@ describe('Comment routes', () => {
       });
   });
 
-  it('GET A comment by id', async () => {
+  it('GETs a comment by id', async () => {
     const comment = {
       name: 'Isaac Awing',
       comment: 'Qbsak is alright',
@@ -76,6 +76,23 @@ describe('Comment routes', () => {
     );
 
     expect(response.body).toEqual({ id: '1', ...comment });
+  });
+
+  it('PUT updates a single comment', async () => {
+    const comment = {
+      name: 'Randy',
+      comment: 'kubisiak is obnoxious',
+      email: 'randy@rude.com',
+      date: '2021-08-18T07:00:00.000Z',
+    };
+
+
+    const commentWithId = await request(app).post('/api/v1/comments').send(comment);
+
+    const res = await request(app)
+      .put(`/api/v1/comments/${commentWithId.body.id}`)
+      .send({ comment: 'I was wrong, kubisiak is just neurodivergent' });
+    expect(res.body).toEqual({ id: '1', comment: 'I was wrong, kubisiak is just neurodivergent', ...comment, });
   });
 
   afterAll(() => {
