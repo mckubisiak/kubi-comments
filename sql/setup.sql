@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS feedback;
+DROP TABLE IF EXISTS comments;
 
-  CREATE TABLE feedback (
+  CREATE TABLE comments (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT NOT NULL,
     comment TEXT NOT NULL,
-    date TEXT NOT NULL,
+    date DATE,
     email TEXT
   );
 
