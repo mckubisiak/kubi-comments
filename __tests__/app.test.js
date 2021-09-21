@@ -13,12 +13,12 @@ describe('Comment routes', () => {
       name: 'Isaac Awing',
       comment: 'Qbsak is alright',
       email: 'rebalalliance@ewingcommander.com',
-      date: '2021-08-01T07:00:00.000Z',
     };
 
     const response = await request(app).post('/api/v1/comments').send(comment);
     expect(response.body).toEqual({
       id: '1',
+      date: null,
       ...comment,
     });
   });
@@ -28,21 +28,18 @@ describe('Comment routes', () => {
       name: 'Isaac Awing',
       comment: 'Qbsak is alright',
       email: 'rebalalliance@ewingcommander.com',
-      date: '2021-08-01T07:00:00.000Z',
     };
 
     const comment2 = {
       name: ' Danerson',
       comment: 'Kubi has excellent communication',
       email: 'kubisfriend@friend.com ',
-      date: '2021-09-01T07:00:00.000Z',
     };
 
     const comment3 = {
       name: 'Randy',
       comment: 'kubisiak is obnoxious',
       email: 'randy@rude.com',
-      date: '2021-08-18T07:00:00.000Z',
     };
 
     await request(app).post('/api/v1/comments').send(comment);
@@ -53,9 +50,9 @@ describe('Comment routes', () => {
       .get('/api/v1/comments')
       .then((res) => {
         expect(res.body).toEqual([
-          { id: '1', ...comment },
-          { id: '2', ...comment2 },
-          { id: '3', ...comment3 },
+          { id: '1', date: null, ...comment },
+          { id: '2', date: null, ...comment2 },
+          { id: '3', date: null, ...comment3 },
         ]);
       });
   });
@@ -65,7 +62,6 @@ describe('Comment routes', () => {
       name: 'Isaac Awing',
       comment: 'Qbsak is alright',
       email: 'rebalalliance@ewingcommander.com',
-      date: '2021-08-01T07:00:00.000Z',
     };
 
     const commentWithId = await request(app)
@@ -75,7 +71,7 @@ describe('Comment routes', () => {
       `/api/v1/comments/${commentWithId.body.id}`
     );
 
-    expect(response.body).toEqual({ id: '1', ...comment });
+    expect(response.body).toEqual({ id: '1', date: null, ...comment });
   });
 
   it('PUT updates a single comment', async () => {
@@ -83,7 +79,6 @@ describe('Comment routes', () => {
       name: 'Randy',
       comment: 'kubisiak is obnoxious',
       email: 'randy@rude.com',
-      date: '2021-08-12T07:00:00.000Z',
     };
 
     const commentWithId = await request(app)
@@ -95,6 +90,7 @@ describe('Comment routes', () => {
       .send({ comment: 'I was wrong, kubisiak is just neurodivergent' });
     expect(response.body).toEqual({
       id: '1',
+      date: null,
       ...comment,
       comment: 'I was wrong, kubisiak is just neurodivergent',
     });
@@ -105,7 +101,6 @@ describe('Comment routes', () => {
       name: 'Isaac Awing',
       comment: 'Qbsak is alright',
       email: 'rebalalliance@ewingcommander.com',
-      date: '2021-08-01T07:00:00.000Z',
     };
 
     const commentWithId = await request(app)
