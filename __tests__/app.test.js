@@ -86,14 +86,38 @@ describe('Comment routes', () => {
       date: '2021-08-12T07:00:00.000Z',
     };
 
-
-    const commentWithId = await request(app).post('/api/v1/comments').send(comment);
+    const commentWithId = await request(app)
+      .post('/api/v1/comments')
+      .send(comment);
 
     const response = await request(app)
       .put(`/api/v1/comments/${commentWithId.body.id}`)
       .send({ comment: 'I was wrong, kubisiak is just neurodivergent' });
-    expect(response.body).toEqual({ id: '1', ...comment, comment: 'I was wrong, kubisiak is just neurodivergent' });
+    expect(response.body).toEqual({
+      id: '1',
+      ...comment,
+      comment: 'I was wrong, kubisiak is just neurodivergent',
+    });
   });
+
+  it('DELETEs a comment by id', async () => {
+    const comment = {
+      name: 'Isaac Awing',
+      comment: 'Qbsak is alright',
+      email: 'rebalalliance@ewingcommander.com',
+      date: '2021-08-01T07:00:00.000Z',
+    };
+
+    const commentWithId = await request(app)
+      .post('/api/v1/comments')
+      .send(comment);
+    const response = await request(app).delete(
+      `/api/v1/comments/${commentWithId.body.id}`
+    );
+
+    expect(response.body).toEqual(`${comment.name} has retracted their comment`);
+  });
+
 
   afterAll(() => {
     pool.end();
