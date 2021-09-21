@@ -83,16 +83,16 @@ describe('Comment routes', () => {
       name: 'Randy',
       comment: 'kubisiak is obnoxious',
       email: 'randy@rude.com',
-      date: '2021-08-18T07:00:00.000Z',
+      date: '2021-08-12T07:00:00.000Z',
     };
 
 
     const commentWithId = await request(app).post('/api/v1/comments').send(comment);
 
-    const res = await request(app)
+    const response = await request(app)
       .put(`/api/v1/comments/${commentWithId.body.id}`)
       .send({ comment: 'I was wrong, kubisiak is just neurodivergent' });
-    expect(res.body).toEqual({ id: '1', comment: 'I was wrong, kubisiak is just neurodivergent', ...comment, });
+    expect(response.body).toEqual({ id: '1', ...comment, comment: 'I was wrong, kubisiak is just neurodivergent' });
   });
 
   afterAll(() => {
