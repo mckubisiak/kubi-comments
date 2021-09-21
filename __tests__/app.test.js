@@ -115,9 +115,10 @@ describe('Comment routes', () => {
       `/api/v1/comments/${commentWithId.body.id}`
     );
 
-    expect(response.body).toEqual(`${comment.name} has retracted their comment`);
+    expect(response.body).toEqual({
+      message: `${comment.name} has retracted their comment`,
+    });
   });
-
 
   afterAll(() => {
     pool.end();
